@@ -28,6 +28,13 @@ export default function ProfilePage() {
   const [solvedBounties, setSolvedBounties] = useState<SolvedBounty[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // New Profile Fields
+  const [displayName, setDisplayName] = useState<string>("");
+  const [bio, setBio] = useState<string>("");
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [editName, setEditName] = useState("");
+  const [editBio, setEditBio] = useState("");
+
   // Load account balance, reputation, and linked GitHub username
   const loadData = useCallback(async () => {
     if (!account) {
@@ -54,6 +61,18 @@ export default function ProfilePage() {
       const storedUser = localStorage.getItem(`gh_user_${account.toLowerCase()}`);
       if (storedUser) {
         setLinkedGithub(storedUser);
+      }
+
+      const storedName = localStorage.getItem(`name_${account.toLowerCase()}`);
+      if (storedName) {
+        setDisplayName(storedName);
+        setEditName(storedName);
+      }
+      
+      const storedBio = localStorage.getItem(`bio_${account.toLowerCase()}`);
+      if (storedBio) {
+        setBio(storedBio);
+        setEditBio(storedBio);
       }
     } catch (e) {
       console.error(e);
@@ -82,6 +101,15 @@ export default function ProfilePage() {
     }
   };
 
+  const handleSaveProfile = () => {
+    if (!account) return;
+    localStorage.setItem(`name_${account.toLowerCase()}`, editName);
+    localStorage.setItem(`bio_${account.toLowerCase()}`, editBio);
+    setDisplayName(editName);
+    setBio(editBio);
+    setIsEditingProfile(false);
+  };
+
   return (
     <div className="min-h-screen pb-24 font-mono" style={{ background: "#f6f3f1" }}>
       {/* Navbar */}
@@ -89,7 +117,7 @@ export default function ProfilePage() {
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-full bg-lake-blue" />
           <Link href="/" className="font-serif text-2xl tracking-tight hover:opacity-85 transition">
-            BountyVerifier
+            MergeMint
           </Link>
         </div>
         <Link href="/" className="btn-ghost text-xs py-2 px-4">
@@ -112,21 +140,52 @@ export default function ProfilePage() {
           <div className="space-y-8 animate-fade-in">
             {/* Header / Banner card */}
             <div className="card-elevated flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-              <div className="flex items-center gap-4">
-                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-coral to-gold flex items-center justify-center text-2xl shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="h-16 w-16 mt-1 rounded-full bg-gradient-to-br from-coral to-gold flex items-center justify-center text-2xl shadow-sm shrink-0">
                   👤
                 </div>
-                <div>
-                  <h1 className="font-serif text-3xl tracking-tight">
-                    {linkedGithub ? `@${linkedGithub}` : "Anonymous Contributor"}
-                  </h1>
-                  <p className="text-xs text-smoke font-mono mt-1">
-                    {account}
-                  </p>
-                </div>
+                {isEditingProfile ? (
+                  <div className="space-y-3 w-full max-w-sm">
+                    <input 
+                      className="input w-full" 
+                      placeholder="Display Name" 
+                      value={editName}
+                      onChange={e => setEditName(e.target.value)}
+                    />
+                    <textarea 
+                      className="input w-full text-sm py-2" 
+                      placeholder="Write a short bio..." 
+                      rows={2}
+                      value={editBio}
+                      onChange={e => setEditBio(e.target.value)}
+                    />
+                    <div className="flex gap-2">
+                      <button className="btn-primary text-xs py-1.5 px-4" onClick={handleSaveProfile}>Save</button>
+                      <button className="btn-ghost text-xs py-1.5 px-4" onClick={() => setIsEditingProfile(false)}>Cancel</button>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <h1 className="font-serif text-3xl tracking-tight">
+                        {displayName || "Anonymous Contributor"}
+                      </h1>
+                      <button 
+                        onClick={() => setIsEditingProfile(true)} 
+                        className="text-xs text-smoke hover:text-lake-blue transition underline"
+                      >
+                        edit
+                      </button>
+                    </div>
+                    {bio && <p className="text-sm text-graphite mt-2 max-w-md">{bio}</p>}
+                    <p className="text-xs text-smoke font-mono mt-2 bg-ash/30 inline-block px-2 py-1 rounded">
+                      {account}
+                    </p>
+                  </div>
+                )}
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex gap-4 shrink-0">
                 <div className="bg-white/50 border border-ash px-4 py-2 rounded-xl text-center">
                   <p className="text-[10px] text-smoke uppercase">Reputation</p>
                   <p className="text-lg font-bold text-lake-blue">{reputationScore}</p>

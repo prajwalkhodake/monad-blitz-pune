@@ -185,7 +185,7 @@ export default function Home() {
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-full bg-lake-blue" />
           <span className="font-serif text-2xl tracking-tight">
-            BountyVerifier
+            MergeMint
           </span>
         </div>
 
@@ -209,9 +209,9 @@ export default function Home() {
               {account.slice(0, 6)}…{account.slice(-4)}
             </button>
           ) : (
-            <button className="btn-primary" onClick={connect} disabled={connecting}>
-              {connecting ? "connecting…" : "connect wallet →"}
-            </button>
+            <Link href="/login" className="btn-primary">
+              sign in / sign up →
+            </Link>
           )}
           {account && !onMonad && (
             <button className="btn-primary text-xs" onClick={switchToMonad}>

@@ -242,7 +242,7 @@ ${verdict}
 ${txHash ? `\n🔗 [View payment transaction on Monadscan](https://testnet.monadscan.com/tx/${txHash})` : ""}
 
 ---
-*Reviewed automatically by BountyVerifier AI Agent on Monad Testnet*`;
+*Reviewed automatically by MergeMint AI Agent on Monad Testnet*`;
 
   await fetch(`https://api.github.com/repos/${owner}/${repo}/issues/${prNumber}/comments`, {
     method: "POST",

@@ -3,7 +3,7 @@ import "./globals.css";
 import { Web3Provider } from "@/lib/web3";
 
 export const metadata: Metadata = {
-  title: "BountyVerifier — AI-Powered Bounty Escrow on Monad",
+  title: "MergeMint — AI-Powered Bounty Escrow on Monad",
   description:
     "Autonomous bounty verification: AI reviews GitHub PRs and auto-releases escrow payments on Monad testnet.",
 };

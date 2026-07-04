@@ -1,0 +1,62 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Environment files (NEVER commit secrets)
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# Build output
+.next/
+out/
+# contracts/artifacts/
+# contracts/cache/
+# contracts/typechain-types/
+dist/
+build/
+
+# Test coverage
+coverage/
+coverage.json
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# TypeScript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Misc
+*.log
+yarn-error.log
+yarn-debug.log
+npm-debug.log
+.eslintcache
+.prettiercache
+
+# Hardhat / Foundry
+cache/
+artifacts/
+broadcast/
+node_modules/
+.claude

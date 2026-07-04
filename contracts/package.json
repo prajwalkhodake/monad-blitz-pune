@@ -1,0 +1,16 @@
+{
+  "name": "bounty-escrow-contracts",
+  "version": "1.0.0",
+  "description": "BountyEscrow smart contract for Autonomous Bounty Verifier on Monad testnet",
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "test": "npx hardhat test",
+    "deploy": "npx hardhat run scripts/deploy.js --network monadTestnet",
+    "deploy:local": "npx hardhat run scripts/deploy.js --network hardhat"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.22.0",
+    "dotenv": "^16.4.0"
+  }
+}
